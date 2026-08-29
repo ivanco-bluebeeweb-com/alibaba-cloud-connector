@@ -1,0 +1,17 @@
+{
+  "connect_alibaba_cloud": 0,
+  "disconnect_alibaba_cloud": 0,
+  "list_connections": 0,
+  "get_cloud_overview": 40,
+  "get_virtual_machine": 8,
+  "list_kubernetes_clusters": 8,
+  "list_metric_alerts": 8,
+  "list_oss_buckets": 8,
+  "list_sql_databases": 8,
+  "list_storage_accounts": 8,
+  "list_virtual_machines": 8,
+  "query_costs": 8,
+  "restart_virtual_machine": 16,
+  "start_virtual_machine": 16,
+  "stop_virtual_machine": 16
+}
