@@ -6,7 +6,6 @@
   "get_virtual_machine": 8,
   "list_kubernetes_clusters": 8,
   "list_metric_alerts": 8,
-  "list_oss_buckets": 8,
   "list_sql_databases": 8,
   "list_storage_accounts": 8,
   "list_virtual_machines": 8,
