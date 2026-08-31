@@ -37,6 +37,8 @@ class ProviderConnection(sdl.Entity):
 
 
 class ProviderConnectionList(sdl.Entity):
+    id: str = ""
+    title: str = ""
     connections: list[ProviderConnection] = []
 
 
@@ -45,6 +47,7 @@ class DisconnectAlibabaCloudParams(BaseModel):
 
 
 class DeleteResult(sdl.Entity):
+    title: str = ""
     deleted: bool = False
     id: str = ""
 
@@ -64,6 +67,8 @@ class GetCloudOverviewParams(BaseModel):
 
 
 class CloudOverview(sdl.Entity):
+    id: str = ""
+    title: str = ""
     ecs_running: int = 0
     ecs_stopped: int = 0
     oss_buckets_count: int = 0
@@ -83,6 +88,8 @@ class ListInstancesParams(BaseModel):
 
 
 class EcsInstance(sdl.Entity):
+    id: str = ""
+    title: str = ""
     instance_id: str = ""
     instance_name: str = ""
     status: str = ""
@@ -96,6 +103,8 @@ class EcsInstance(sdl.Entity):
 
 
 class EcsInstanceList(sdl.Entity):
+    id: str = ""
+    title: str = ""
     instances: list[EcsInstance] = []
 
 
@@ -106,6 +115,8 @@ class InstanceResourceParams(BaseModel):
 
 
 class InstanceActionResult(sdl.Entity):
+    id: str = ""
+    title: str = ""
     instance_id: str = ""
     action: str = ""
 
@@ -120,6 +131,8 @@ class ListBucketsParams(BaseModel):
 
 
 class OssBucket(sdl.Entity):
+    id: str = ""
+    title: str = ""
     name: str = ""
     location: str = ""
     storage_class: str = ""
@@ -127,6 +140,8 @@ class OssBucket(sdl.Entity):
 
 
 class OssBucketList(sdl.Entity):
+    id: str = ""
+    title: str = ""
     buckets: list[OssBucket] = []
 
 
@@ -141,6 +156,8 @@ class ListRdsInstancesParams(BaseModel):
 
 
 class RdsInstance(sdl.Entity):
+    id: str = ""
+    title: str = ""
     dbinstance_id: str = ""
     dbinstance_description: str = ""
     engine: str = ""
@@ -150,6 +167,8 @@ class RdsInstance(sdl.Entity):
 
 
 class RdsInstanceList(sdl.Entity):
+    id: str = ""
+    title: str = ""
     instances: list[RdsInstance] = []
 
 
@@ -164,6 +183,8 @@ class ListClustersParams(BaseModel):
 
 
 class AckCluster(sdl.Entity):
+    id: str = ""
+    title: str = ""
     cluster_id: str = ""
     name: str = ""
     state: str = ""
@@ -173,6 +194,8 @@ class AckCluster(sdl.Entity):
 
 
 class AckClusterList(sdl.Entity):
+    id: str = ""
+    title: str = ""
     clusters: list[AckCluster] = []
 
 
@@ -186,6 +209,8 @@ class ListAlertsParams(BaseModel):
 
 
 class MonitorAlert(sdl.Entity):
+    id: str = ""
+    title: str = ""
     rule_id: str = ""
     rule_name: str = ""
     namespace: str = ""
@@ -194,6 +219,8 @@ class MonitorAlert(sdl.Entity):
 
 
 class MonitorAlertList(sdl.Entity):
+    id: str = ""
+    title: str = ""
     alerts: list[MonitorAlert] = []
 
 
@@ -207,6 +234,8 @@ class GetBillingParams(BaseModel):
 
 
 class BillingBalance(sdl.Entity):
+    id: str = ""
+    title: str = ""
     available_amount: str = ""
     credit_amount: str = ""
     currency: str = ""
