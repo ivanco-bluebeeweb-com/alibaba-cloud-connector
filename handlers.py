@@ -108,7 +108,7 @@ async def connect_alibaba_cloud(ctx, params: ConnectAlibabaCloudParams) -> Actio
     return ActionResult.success(ProviderConnection(
         id=conn_id, title=title, connected=True, detail="Connected",
         region_id=entry["region_id"], account_id=params.access_key_id[:8] + "...",
-    ))
+    ), summary="Alibaba cloud connected.")
 
 
 @chat.function(
@@ -127,7 +127,7 @@ async def disconnect_alibaba_cloud(ctx, params: DisconnectAlibabaCloudParams) ->
     if len(remaining) == len(connections):
         return ActionResult.error("No connection found with that id.")
     await _save_connections(ctx, remaining)
-    return ActionResult.success(DeleteResult(deleted=True, id=params.connection_id))
+    return ActionResult.success(DeleteResult(deleted=True, id=params.connection_id), summary="Alibaba cloud disconnected.")
 
 
 @chat.function(
@@ -148,7 +148,7 @@ async def list_connections(ctx, params: NoParams) -> ActionResult:
         )
         for c in connections
     ]
-    return ActionResult.success(ProviderConnectionList(connections=out))
+    return ActionResult.success(ProviderConnectionList(connections=out), summary="Connections listed.")
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -188,7 +188,7 @@ async def get_cloud_overview(ctx, params: GetCloudOverviewParams) -> ActionResul
         oss_buckets_count=len(oss_buckets), rds_instances_count=len(rds_instances),
         ack_clusters_count=len(clusters) if isinstance(clusters, list) else 0,
         account_balance=str(bal_data.get("AvailableAmount", "")),
-    ))
+    ), summary="Cloud overview retrieved.")
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -229,7 +229,7 @@ async def list_virtual_machines(ctx, params: ListInstancesParams) -> ActionResul
         )
         for i in items
     ]
-    return ActionResult.success(EcsInstanceList(instances=out))
+    return ActionResult.success(EcsInstanceList(instances=out), summary="Virtual machines listed.")
 
 
 @chat.function(
@@ -265,7 +265,7 @@ async def get_virtual_machine(ctx, params: InstanceResourceParams) -> ActionResu
         public_ip=",".join((i.get("PublicIpAddress") or {}).get("IpAddress", [])),
         private_ip=",".join((i.get("VpcAttributes") or {}).get("PrivateIpAddress", {}).get("IpAddress", [])),
         creation_time=i.get("CreationTime", ""),
-    ))
+    ), summary="Virtual machine retrieved.")
 
 
 @chat.function(
@@ -291,7 +291,7 @@ async def start_virtual_machine(ctx, params: InstanceResourceParams) -> ActionRe
         )
     except ali.ProviderError as e:
         return _err("Couldn't start that ECS instance", e)
-    return ActionResult.success(InstanceActionResult(instance_id=params.instance_id, action="start_requested"))
+    return ActionResult.success(InstanceActionResult(instance_id=params.instance_id, action="start_requested"), summary="Virtual machine start requested.")
 
 
 @chat.function(
@@ -317,7 +317,7 @@ async def stop_virtual_machine(ctx, params: InstanceResourceParams) -> ActionRes
         )
     except ali.ProviderError as e:
         return _err("Couldn't stop that ECS instance", e)
-    return ActionResult.success(InstanceActionResult(instance_id=params.instance_id, action="stop_requested"))
+    return ActionResult.success(InstanceActionResult(instance_id=params.instance_id, action="stop_requested"), summary="Virtual machine stop requested.")
 
 
 @chat.function(
@@ -343,7 +343,7 @@ async def restart_virtual_machine(ctx, params: InstanceResourceParams) -> Action
         )
     except ali.ProviderError as e:
         return _err("Couldn't restart that ECS instance", e)
-    return ActionResult.success(InstanceActionResult(instance_id=params.instance_id, action="restart_requested"))
+    return ActionResult.success(InstanceActionResult(instance_id=params.instance_id, action="restart_requested"), summary="Virtual machine restart requested.")
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -374,7 +374,7 @@ async def list_storage_accounts(ctx, params: ListBucketsParams) -> ActionResult:
         OssBucket(name=b.get("name", ""), location=b.get("location", ""), creation_date=b.get("creation_date", ""))
         for b in items
     ]
-    return ActionResult.success(OssBucketList(buckets=out))
+    return ActionResult.success(OssBucketList(buckets=out), summary="Storage accounts listed.")
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -411,7 +411,7 @@ async def list_sql_databases(ctx, params: ListRdsInstancesParams) -> ActionResul
         )
         for i in items
     ]
-    return ActionResult.success(RdsInstanceList(instances=out))
+    return ActionResult.success(RdsInstanceList(instances=out), summary="Sql databases listed.")
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -448,7 +448,7 @@ async def list_kubernetes_clusters(ctx, params: ListClustersParams) -> ActionRes
         )
         for c in items
     ]
-    return ActionResult.success(AckClusterList(clusters=out))
+    return ActionResult.success(AckClusterList(clusters=out), summary="Kubernetes clusters listed.")
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -485,7 +485,7 @@ async def list_metric_alerts(ctx, params: ListAlertsParams) -> ActionResult:
         )
         for a in items
     ]
-    return ActionResult.success(MonitorAlertList(alerts=out))
+    return ActionResult.success(MonitorAlertList(alerts=out), summary="Metric alerts listed.")
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -518,4 +518,4 @@ async def query_costs(ctx, params: GetBillingParams) -> ActionResult:
         available_cash_amount=data.get("AvailableCashAmount", ""),
         credit_amount=data.get("CreditAmount", ""),
         currency=data.get("Currency", "CNY"),
-    ))
+    ), summary="Query costs done.")
